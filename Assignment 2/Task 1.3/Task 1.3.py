@@ -10,7 +10,7 @@ Solve both the one-price and two-price models on the in-sample set,
 then evaluate the resulting p_DA decisions on the out-of-sample set.
 Report averaged in-sample vs out-of-sample expected profits for both models.
 """
-
+from pathlib import Path
 from scipy.stats import bernoulli
 import gurobipy as gp
 import pandas as pd
@@ -34,12 +34,16 @@ fold_size = W // n_folds             # 200 per fold
 # ─────────────────────────────────────────────
 # 1.  Load / generate scenarios  (same as 1.1/1.2)
 # ─────────────────────────────────────────────
-DA_price = pd.read_csv(r"C:\Users\GioBr\Desktop\DTU\RIEM - Renewables in Electricity Market\Assignment 2\Day-Ahead-Price-01_03_26-20_30_26.csv", sep=";")
+base_path = Path(__file__).resolve().parent.parent / "data"
+
+
+DA_price = pd.read_csv(base_path / "Day-Ahead-Price-01_03_26-20_30_26.csv", sep=";")
+#DA_price = pd.read_csv(r"C:\Users\GioBr\Desktop\DTU\RIEM - Renewables in Electricity Market\Assignment 2\Day-Ahead-Price-01_03_26-20_30_26.csv", sep=";")
 DA_price["Eur/MWh"] = DA_price["Eur/MWh"].str.replace(',', '.').astype(float)
 prices           = DA_price["Eur/MWh"].values[:24 * N_price]
 price_scenarios  = prices.reshape(N_price, T)
-
-wind_prod      = pd.read_excel(r"C:\Users\GioBr\Desktop\DTU\RIEM - Renewables in Electricity Market\Assignment 2\ninja-wind-country-DK-current_onshore-merra2.xlsx", header=3)
+wind_prod      = pd.read_excel(base_path / "ninja-wind-country-DK-current_onshore-merra2.xlsx")
+#wind_prod      = pd.read_excel(r"C:\Users\GioBr\Desktop\DTU\RIEM - Renewables in Electricity Market\Assignment 2\ninja-wind-country-DK-current_onshore-merra2.xlsx", header=3)
 wind_scenarios = wind_prod["DK02_factor [1]"].values[:24 * N_wind] * capacity
 wind_scenarios = wind_scenarios.reshape(N_wind, T)
 
