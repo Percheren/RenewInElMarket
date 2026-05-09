@@ -1,0 +1,54 @@
+Scenarios: 1600  |  Hours: 24  |  alpha = 0.9
+Mean DA price : 105.71 EUR/MWh
+Mean wind cap.: 188.8 MW
+
+One-price E[lDA-lBP]: mean=-4.6645 | hours MR>0: 9/24 | hours MR<0: 15/24
+Expected corner solution: p_DA=P_nom at 9 hours, p_DA=0 at 15 hours
+
+ beta      E[Pi] 1P       CVaR 1P      E[Pi] 2P       CVaR 2P
+--------------------------------------------------------------
+Set parameter Username
+Set parameter LicenseID to value 2774412
+Academic license - for non-commercial use only - expires 2027-02-03
+ 0.00       532,751        49,718       459,333        -1,078
+ 0.10       532,751        49,718       459,156         3,306
+ 0.30       532,751        49,718       458,218         8,468
+ 0.50       532,751        49,718       456,398        13,315
+ 0.75       532,751        49,718       455,460        14,954
+ 1.00       532,751        49,718       453,798        16,841
+ 1.50       532,751        49,718       449,906        19,892
+ 2.00       532,751        49,718       448,812        20,488
+ 3.00       532,751        49,718       448,695        20,545
+ 5.00       532,751        49,718       448,695        20,545
+
+-- In-sample size sensitivity (beta=1, one-price) --
+  n=  100  OOS E[Pi]=528,349 EUR  OOS CVaR=45,447 EUR
+  n=  200  OOS E[Pi]=534,357 EUR  OOS CVaR=52,794 EUR
+  n=  400  OOS E[Pi]=529,100 EUR  OOS CVaR=52,953 EUR
+  n=  800  OOS E[Pi]=535,412 EUR  OOS CVaR=54,622 EUR
+  n= 1600  OOS E[Pi]=532,751 EUR  OOS CVaR=49,718 EUR
+
+=== Task 1.4 — Full Results ===
+
+ beta        E[Pi] 1P         CVaR 1P        E[Pi] 2P         CVaR 2P
+----------------------------------------------------------------------
+ 0.00         532,751          49,718         459,333          -1,078
+ 0.10         532,751          49,718         459,156           3,306
+ 0.30         532,751          49,718         458,218           8,468
+ 0.50         532,751          49,718         456,398          13,315
+ 0.75         532,751          49,718         455,460          14,954
+ 1.00         532,751          49,718         453,798          16,841
+ 1.50         532,751          49,718         449,906          19,892
+ 2.00         532,751          49,718         448,812          20,488
+ 3.00         532,751          49,718         448,695          20,545
+ 5.00         532,751          49,718         448,695          20,545
+
+=== Risk-neutral (β=0) vs Max Risk-Averse (β=5) ===
+
+One-price:
+  E[Pi] sacrifice  : +0 EUR  (+0.00%)
+  CVaR improvement : +0 EUR
+
+Two-price:
+  E[Pi] sacrifice  : +10,638 EUR  (+2.32%)
+  CVaR improvement : +21,623 EUR
