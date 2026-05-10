@@ -6,6 +6,12 @@
 <br> Laurits Dalsgaard - s223862
 <br> Giovanni Brandolini - s223848
 
+## How the code works
+
+The different tasks are distributed in different files, the namings of the files describe which tasks it solves.
+
+To make sure that all paths are working, avoid changing the structure of the Assignment 2 folder or download individual files w/o data.
+
 ## Programming and development distribution
 
 **Task 1.1:** Laurits <br>
@@ -25,8 +31,3 @@ https://data.nordpoolgroup.com/auction/day-ahead/prices?deliveryDate=latest&curr
 https://www.renewables.ninja/
 
 
-## How the code works
-
-The different tasks are distributed in different files, the namings of the files describe which tasks it solves.
-
-To make sure that all paths are working, avoid changing the structure of the Assignment 2 folder or download individual files w/o data.
