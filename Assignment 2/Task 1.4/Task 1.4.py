@@ -368,23 +368,6 @@ plt.tight_layout()
 plt.savefig("task1_4_profit_distributions.png", dpi=150)
 plt.show()
 
-# Figure 5: In-sample size sensitivity
-fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-axes[0].plot(fold_sizes, oos_E_sens, "o-", color="steelblue", ms=8, lw=1.8)
-axes[0].set_title("OOS $\\mathbb{E}[\\Pi]$ vs In-sample Size  (β=1, 1p)", fontsize=11)
-axes[0].set_xlabel("In-sample scenarios"); axes[0].set_ylabel("OOS $\\mathbb{E}[\\Pi]$ (EUR)")
-axes[0].set_xscale("log"); axes[0].grid(linestyle="--", alpha=0.4)
-axes[0].spines["top"].set_visible(False); axes[0].spines["right"].set_visible(False)
-axes[1].plot(fold_sizes, oos_C_sens, "s-", color="coral", ms=8, lw=1.8)
-axes[1].set_title("OOS CVaR$_{0.90}$ vs In-sample Size  (β=1, 1p)", fontsize=11)
-axes[1].set_xlabel("In-sample scenarios"); axes[1].set_ylabel("OOS CVaR$_{0.90}$ (EUR)")
-axes[1].set_xscale("log"); axes[1].grid(linestyle="--", alpha=0.4)
-axes[1].spines["top"].set_visible(False); axes[1].spines["right"].set_visible(False)
-plt.tight_layout()
-plt.savefig("task1_4_insample_sensitivity.png", dpi=150)
-plt.show()
-
-
 # =============================================================================
 # 7.  Summary tables
 # =============================================================================
