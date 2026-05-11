@@ -3,40 +3,6 @@ Task 1.4 - Risk-Averse Stochastic Offering via Mean-CVaR (alpha = 0.90)
 ========================================================================
 Following Lecture 9 (Kazempour, DTU 46755), the risk-neutral models of
 Tasks 1.1 and 1.2 are extended with a mean-CVaR objective.
-
-FORMULATION (Lecture 9, slide 65)
-----------------------------------
-Decision variables
-    p_DA[t]          : DA offer [MW], first-stage (not scenario-indexed)
-    Delta_up[w,t]    : upward   imbalance [MW], second-stage, >= 0
-    Delta_down[w,t]  : downward imbalance [MW], second-stage, >= 0
-    zeta             : VaR threshold [EUR], scalar, free (endogenous)
-    eta[w]           : shortfall below zeta [EUR], >= 0
-
-Objective (approach 1 from lecture, beta >= 0):
-    max  sum_w pi_w * Profit_w  +  beta * ( zeta - 1/(1-alpha) * sum_w pi_w * eta_w )
-         |___ E[Pi] ___|               |__________ CVaR_alpha ____________________|
-
-Constraints:
-    0 <= p_DA[t] <= P_nom                                     forall t
-    Delta_up[w,t] - Delta_down[w,t] = p_real[w,t] - p_DA[t]  forall t,w
-    Delta_up[w,t]   >= 0                                      forall t,w
-    Delta_down[w,t] >= 0                                      forall t,w
-    eta[w]          >= 0                                      forall w
-    eta[w] >= zeta - Profit_w                                 forall w
-
-NOTE ON BOUNDS:
-    Delta_up and Delta_down have NO upper bound (only lb=0).
-    The economics enforce complementarity: for the one-price scheme
-    with lBP != lDA, it is never optimal to have both > 0 simultaneously.
-    For the two-price scheme with asymmetric c_up / c_dn, the same holds.
-    Adding ub=P_nom causes artificial inflation (as confirmed by diagnostics).
-
-One-price profit (Task 1.1):
-    Profit_w = sum_t [ lDA_tw * p_DA_t + lBP_tw * (Delta_up_tw - Delta_down_tw) ]
-
-Two-price profit (Task 1.2):
-    Profit_w = sum_t [ lDA_tw * p_DA_t + c_up_tw * Delta_up_tw - c_dn_tw * Delta_down_tw ]
 """
 from pathlib import Path
 from scipy.stats import bernoulli
@@ -311,31 +277,7 @@ for beta in BETAS:
 
 
 # =============================================================================
-# 6.  In-sample size sensitivity  (beta=1, one-price)
-# =============================================================================
-print("\n-- In-sample size sensitivity (beta=1, one-price) --")
-BETA_SENS  = 1.0
-fold_sizes = [100, 200, 400, 800, 1600]
-oos_E_sens, oos_C_sens = [], []
-
-for n_is in fold_sizes:
-    rng_s   = np.random.default_rng(seed=n_is)
-    is_idx  = rng_s.choice(W, size=n_is, replace=False)
-    oos_idx = np.setdiff1d(all_idx, is_idx)
-    if len(oos_idx) == 0:
-        oos_idx = is_idx
-
-    pDA_s  = solve_1price_cvar(is_idx, beta=BETA_SENS)
-    Pi_oos = scenario_profits_1p(pDA_s, oos_idx)
-    ep_oos = float(Pi_oos.mean())
-    cv_oos = cvar_from_profits(Pi_oos)
-    oos_E_sens.append(ep_oos)
-    oos_C_sens.append(cv_oos)
-    print(f"  n={n_is:5d}  OOS E[Pi]={ep_oos:,.0f} EUR  OOS CVaR={cv_oos:,.0f} EUR")
-
-
-# =============================================================================
-# 7.  Plots
+# 6.  Plots
 # =============================================================================
 C     = {"1p": "steelblue", "2p": "coral"}
 L     = {"1p": "One-price", "2p": "Two-price"}
@@ -444,7 +386,7 @@ plt.show()
 
 
 # =============================================================================
-# 8.  Summary tables
+# 7.  Summary tables
 # =============================================================================
 print("\n=== Task 1.4 — Full Results ===")
 print(f"\n{'beta':>5}  {'E[Pi] 1P':>14}  {'CVaR 1P':>14}  "
